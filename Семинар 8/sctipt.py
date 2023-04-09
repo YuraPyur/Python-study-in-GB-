@@ -34,7 +34,6 @@ def print_data():
     with open('data_first_variant.csv', 'r', encoding='utf-8') as file:
         data_first = file.readlines()
         data_first_version_second = []
-        data_middle = ''
         j = 0
         for i in range(len(data_first)):
             if data_first[i] == '\n' or i == len(data_first) - 1:
@@ -42,6 +41,7 @@ def print_data():
                 j = i
         data_first = data_first_version_second
         print(''.join(data_first))
+        
 
     print('Вывожу данные для Вас из 2-ого файла\n')
     with open('data_second_variant.csv', 'r', encoding='utf-8') as file:
@@ -51,8 +51,82 @@ def print_data():
 
 
 def put_data():
-    pass
+    print('Из какого файла Вы хотите изменить данные?')
+    data_first, data_second = print_data()
+    number_file = int(input('Введите номер файла: '))
+
+    while number_file != 1 and number_file != 2:
+        print('Ты дурак?! Даю тебе последний шанс')
+        number_file = int(input('Введите номер файла: '))
+
+    if number_file == 1:  
+        print("Какую именно запись по счету Вы хотите изменить?")
+        number_journal = int(input('Введите номер записи: '))
+
+        print(f'Изменить данную запись\n{data_first[number_journal-1]}')
+        name = name_data()
+        surname = surname_data()
+        phone = phone_data()
+        address = address_data()
+        data_first = data_first[:number_journal-1] + [f'{name}\n{surname}\n{phone}\n{address}\n\n'] + \
+                     data_first[number_journal:]
+        for i in range(len(data_first)):
+            for j in range(len(data_first[i])):
+                if data_first[i][0] == '\n':
+                    data_first[i]= data_first[i][1:]
+        with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
+            file.write(''.join(data_first))
+        print('Изменения успешно сохранены!')
+    else:
+        print("Какую именно запись по счету Вы хотите изменить?")
+        number_journal = int(input('Введите номер записи: '))
+        print(f'Изменить данную запись\n{data_second[number_journal-1]}')
+        name = name_data()
+        surname = surname_data()
+        phone = phone_data()
+        address = address_data()
+        data_second = data_second[:number_journal-1] + [f'{name};{surname};{phone};{address}\n'] + \
+                      data_second[number_journal:]
+        for i in range(len(data_first)):
+            for j in range(len(data_first[i])):
+                if data_first[i][0] == '\n':
+                    data_first[i]= data_first[i][1:]
+        print(data_second)
+        with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
+            file.write(''.join(data_second))
+        print('Изменения успешно сохранены!')  
 
 
 def delete_data():
-    pass
+    print('Из какого файла Вы хотите удалить данные?')
+    data_first, data_second = print_data()
+    number_file = int(input('Введите номер файла: '))
+
+    while number_file != 1 and number_file != 2:
+        print('Ты дурак?! Даю тебе последний шанс')
+        number_file = int(input('Введите номер файла: '))
+
+    if number_file == 1:  
+        print("Какую именно запись по счету Вы хотите удалить?")
+        number_journal = int(input('Введите номер записи: '))
+        print(f'Удалить данную запись\n{data_first[number_journal - 1]}')
+        data_first = data_first[:number_journal-1] + data_first[number_journal:]
+        for i in range(len(data_first)):
+            for j in range(len(data_first[i])):
+                if data_first[i][0] == '\n':
+                    data_first[i]= data_first[i][1:]
+        with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
+            file.write(''.join(data_first))
+        print('Изменения успешно сохранены!')
+    else:
+        print("Какую именно запись по счету Вы хотите удалить?")
+        number_journal = int(input('Введите номер записи: '))
+        print(f'Удалить данную запись\n{data_second[number_journal - 1]}')
+        data_second = data_second[:number_journal-1] + data_second[number_journal:]
+        for i in range(len(data_first)):
+            for j in range(len(data_first[i])):
+                if data_first[i][0] == '\n':
+                    data_first[i]= data_first[i][1:]
+        with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
+            file.write(''.join(data_second))
+        print('Изменения успешно сохранены!')  
